@@ -22,4 +22,32 @@ public class GameService  {
                 .collect(Collectors.toList());
     }
 
+    public GameMinDTO findById(Long id) {
+        return gameRepository
+                .findById(id)
+                .map(GameMinDTO::new)
+                .orElseThrow(() -> new RuntimeException("Game not found!"));
+    }
+
+    public void update(Long id, Game updatedGame) {
+        var game = gameRepository
+                .findById(id)
+                .orElseThrow(() -> new RuntimeException("Game not found!"));
+        game.setTitle(updatedGame.getTitle());
+        game.setYear(updatedGame.getYear());
+        game.setGenre(updatedGame.getGenre());
+        game.setPlatforms(updatedGame.getPlatforms());
+        game.setScore(updatedGame.getScore());
+        game.setImageUrl(updatedGame.getImageUrl());
+        game.setShortDescription(updatedGame.getShortDescription());
+        game.setLongDescription(updatedGame.getLongDescription());
+        gameRepository.save(game);
+    }
+
+    public void delete(Long id) {
+        var game = gameRepository
+                .findById(id)
+                .orElseThrow(() -> new RuntimeException("Game not found!"));
+        gameRepository.delete(game);
+    }
 }

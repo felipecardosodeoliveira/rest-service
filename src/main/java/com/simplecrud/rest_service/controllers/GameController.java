@@ -1,11 +1,10 @@
 package com.simplecrud.rest_service.controllers;
 
 import com.simplecrud.rest_service.dto.GameMinDTO;
+import com.simplecrud.rest_service.entities.Game;
 import com.simplecrud.rest_service.services.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,4 +19,20 @@ public class GameController {
     public List<GameMinDTO> findAll() {
         return gameService.findAll();
     }
+
+    @GetMapping(value = "/{id}")
+    public GameMinDTO findById(@PathVariable Long id) {
+        return gameService.findById(id);
+    }
+
+    @PutMapping(value = "/{id}")
+    public void update(@PathVariable Long id, @RequestBody Game updatedGame) {
+        gameService.update(id, updatedGame);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public void delete(@PathVariable Long id) {
+        gameService.delete(id);
+    }
 }
+
