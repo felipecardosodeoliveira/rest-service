@@ -1,8 +1,10 @@
 package com.simplecrud.rest_service.services;
 
 import com.simplecrud.rest_service.dto.GameMinDTO;
+import com.simplecrud.rest_service.dto.GameDTO;
 import com.simplecrud.rest_service.entities.Game;
 import com.simplecrud.rest_service.repositories.GameRepository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ public class GameService  {
     @Autowired
     private GameRepository gameRepository;
 
+    @Transactional(readOnly = true)
     public List<GameMinDTO> findAll() {
         List<Game> games = gameRepository.findAll();
         return games.stream()
@@ -22,10 +25,11 @@ public class GameService  {
                 .collect(Collectors.toList());
     }
 
-    public GameMinDTO findById(Long id) {
+    @Transactional(readOnly = true)
+    public GameDTO findById(Long id) {
         return gameRepository
                 .findById(id)
-                .map(GameMinDTO::new)
+                .map(GameDTO::new)
                 .orElseThrow(() -> new RuntimeException("Game not found!"));
     }
 

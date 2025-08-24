@@ -1,5 +1,6 @@
 package com.simplecrud.rest_service.controllers;
 
+import com.simplecrud.rest_service.dto.GameDTO;
 import com.simplecrud.rest_service.dto.GameMinDTO;
 import com.simplecrud.rest_service.entities.Game;
 import com.simplecrud.rest_service.services.GameService;
@@ -21,7 +22,7 @@ public class GameController {
     }
 
     @GetMapping(value = "/{id}")
-    public GameMinDTO findById(@PathVariable Long id) {
+    public GameDTO findById(@PathVariable Long id) {
         return gameService.findById(id);
     }
 
