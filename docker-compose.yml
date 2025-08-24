@@ -1,0 +1,44 @@
+version: "3.8"
+
+services:
+  pg-docker:
+    image: postgres:14-alpine
+    container_name: dev-postgresql
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - 5433:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - dev-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  pgadmin-docker:
+    image: dpage/pgadmin4
+    container_name: dev-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: master@example.com
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - 5050:80
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      pg-docker:
+        condition: service_healthy
+    networks:
+      - dev-network
+
+volumes:
+  postgres_data:
+  pgadmin_data:
+
+networks:
+  dev-network:
+    driver: bridge
