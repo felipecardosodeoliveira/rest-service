@@ -1,19 +1,24 @@
 package com.simplecrud.rest_service.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Objects;
 
 @Embeddable
 public class BelongingPK {
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "game_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Game game;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "list_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private GameList list;
 
     public BelongingPK() {}

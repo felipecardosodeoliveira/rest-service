@@ -30,9 +30,9 @@ public class GameListController {
         gameListService.update(id, gameList);
     }
 
-//    @DeleteMapping(value = "/{id}")
-//    public void delete(@PathVariable Long id) {
-//        gameListService.delete(id);
-//    }
+    @DeleteMapping(value = "/{id}")
+    public void delete(@PathVariable Long id) {
+        gameListService.delete(id);
+    }
 
 }

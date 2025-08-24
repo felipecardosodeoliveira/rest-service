@@ -41,12 +41,12 @@ public class GameListService {
         gameListRepository.save(gameList);
     }
 
-//    @Transactional()
-//    public void delete(Long id) {
-//        var gameList = gameListRepository
-//                .findById(id)
-//                .orElseThrow(() -> new RuntimeException("List item not found"));
-//        gameListRepository.delete(gameList);
-//    }
+    @Transactional()
+    public void delete(Long id) {
+        var gameList = gameListRepository
+                .findById(id)
+                .orElseThrow(() -> new RuntimeException("List item not found"));
+        gameListRepository.delete(gameList);
+    }
 
 }
