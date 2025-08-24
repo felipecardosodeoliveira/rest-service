@@ -3,6 +3,7 @@ package com.simplecrud.rest_service.services;
 import com.simplecrud.rest_service.dto.GameMinDTO;
 import com.simplecrud.rest_service.dto.GameDTO;
 import com.simplecrud.rest_service.entities.Game;
+import com.simplecrud.rest_service.projections.GameMinProjection;
 import com.simplecrud.rest_service.repositories.GameRepository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,5 +54,14 @@ public class GameService  {
                 .findById(id)
                 .orElseThrow(() -> new RuntimeException("Game not found!"));
         gameRepository.delete(game);
+    }
+
+    @Transactional(readOnly = true)
+    public List<GameMinDTO> findByList(Long id) {
+        return gameRepository
+                .searchByList(id)
+                .stream()
+                .map(GameMinDTO::new)
+                .collect(Collectors.toList());
     }
 }

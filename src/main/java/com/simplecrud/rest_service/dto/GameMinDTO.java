@@ -1,6 +1,8 @@
 package com.simplecrud.rest_service.dto;
 
 import com.simplecrud.rest_service.entities.Game;
+import com.simplecrud.rest_service.projections.GameMinProjection;
+import org.springframework.expression.spel.ast.Projection;
 
 public class GameMinDTO {
     private Long id;
@@ -16,6 +18,14 @@ public class GameMinDTO {
         title = entity.getTitle();
         year = entity.getYear();
         imgUrl = entity.getImageUrl();
+        shortDescription = entity.getShortDescription();
+    }
+
+    public GameMinDTO(GameMinProjection entity) {
+        id = entity.getId();
+        title = entity.getTitle();
+        year = entity.getYear();
+        imgUrl = entity.getImgUrl();
         shortDescription = entity.getShortDescription();
     }
 
